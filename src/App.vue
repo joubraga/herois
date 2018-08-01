@@ -1,33 +1,22 @@
 <template>
   <v-app>
-
-    <Header :logo="imagem" />
-    
-    <v-content>
-      <router-view />
-    </v-content>
-    
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer>
-
+    <LayoutAdmin />
   </v-app>
 </template>
 
 <script>
-  import Header from './components/theme/header/Header'
+  import LayoutAdmin from './containers/layout/Admin'
 
   export default {
-    name: 'App',
+    name: 'Heróis',
     data () {
       return {
         fixed: false,
-        right: true,
-        imagem: 'caminho da imagem'
+        right: true
       }
     },
     components: {
-      Header
+      LayoutAdmin
     }
   }
 </script>

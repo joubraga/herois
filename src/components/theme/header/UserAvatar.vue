@@ -7,24 +7,19 @@
          <v-avatar v-else>
             <v-icon >perm_identity</v-icon>
         </v-avatar>
+        
         <v-menu bottom left>
-            <v-btn
-              slot="activator"
-              dark
-              icon
-            >
-              <v-icon color="e6e9ed">arrow_drop_down</v-icon>
+            <v-btn  slot="activator" dark icon >
+              <v-icon style="color: #abb3be;">arrow_drop_down</v-icon>
             </v-btn>
 
             <v-list>
-              <v-list-tile
-                v-for="(item, i) in items"
-                :key="i"
-              >
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-              </v-list-tile>
+                <v-list-tile class="avatar__list" v-for="(item, i) in items" :key="i" >
+                    <v-icon class="avatar__list-icon"> {{ item.icon }} </v-icon> 
+                    <v-list-tile-title class="avatar_list-item"> {{ item.title }} </v-list-tile-title>
+                </v-list-tile>
             </v-list>
-          </v-menu>
+        </v-menu>
     </div>
 </template>
 
@@ -44,8 +39,8 @@
         data () {
             return {
                 items: [
-                    { title: 'Ver perfil'},
-                    { title: 'Sair'}
+                    { title: 'Ver perfil', icon: 'account_circle'},
+                    { title: 'Sair', icon: 'power_settings_new'}
                 ]
             }
         }
@@ -55,6 +50,14 @@
 <style lang="css">
     .v-avatar .v-icon, .v-avatar img {
         border: 1px solid #e6e9ed;
+    }
+
+    .avatar__list {
+        width: 140px;
+    }
+
+    .avatar_list-item {
+        margin-left: 9%;
     }
 </style>
 
