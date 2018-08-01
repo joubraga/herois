@@ -35,20 +35,3 @@
         }
     }
 </script>
-
-<style lang="css">
-    .toolbar__logo {
-        width: 200px;
-        height: 45px;
-        background-color: #f5f7fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 500;
-        color: #abb3be;
-    }
-
-    .toolbar__page {
-        background-color: #4687df!important; margin-top: 60px!important; color: #ffffff!important;
-    }
-</style>

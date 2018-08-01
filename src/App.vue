@@ -6,7 +6,7 @@
 
 <script>
   import LayoutAdmin from './containers/layout/Admin'
-
+  
   export default {
     name: 'Herois',
     data () {

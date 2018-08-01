@@ -1,11 +1,11 @@
 <template>
     <v-layout class="search">
-        <v-flex xs10 md10 lg10>
-            <input type="search" name="search" class="filter__btn" v-model="filter" @keyup="enviaSearch(filter)" :placeholder="placeholderSearch">
+        <v-flex xs10 md10 lg10 class="search__div">
+            <input type="search" name="search" class="search__input" v-model="filter" @keyup="enviaSearch(filter)" :placeholder="placeholderSearch">
         </v-flex>
         <v-flex xs2 md2 lg2 >
-            <router-link :to="{ name: routerName }" class="">
-                <a class="fitler__new"> <v-icon color="white" class="filter__new-icon">add_circle</v-icon> Novo </a>
+            <router-link :to="{ name: routerName }" class="" tag="button">
+                <span class="search__new"> <v-icon color="white" class="search__new-icon">add_circle</v-icon> Novo </span>
             </router-link>
         </v-flex>
     </v-layout>

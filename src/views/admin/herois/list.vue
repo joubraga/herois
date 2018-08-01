@@ -47,30 +47,3 @@
         }
     }
 </script>
-
-<style lang="css">
-    .filter__btn {
-        border: 1px solid red;
-        border-radius: 5px;
-        width: 100%;
-        height: 40px;
-        padding: 1%;
-    }
-
-    .fitler__new {
-        background-color: #4687df;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        color: #ffffff;
-        height: 40px;
-        width: 40%;
-        margin-left: 5%;
-    }
-
-    .filter__new-icon {
-        margin-right: 3%
-    }
-</style>

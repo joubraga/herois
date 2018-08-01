@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import LayoutAdmin from './containers/layout/Admin'
+// import LayoutAdmin from './containers/layout/Admin'
 
 import ListaPersonagens from './views/admin/herois/list'
 import CriarPersonagens from './views/admin/herois/create'
