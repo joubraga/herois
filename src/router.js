@@ -40,6 +40,11 @@ export default new Router({
           name: 'CriarPersonagens',
           component: CriarPersonagens
         },
+        {
+          path: '/personagens/editar',
+          name: 'EditarPersonagem',
+          component: CriarPersonagens
+        },
       ]
     }
   ]

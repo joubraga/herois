@@ -1,10 +1,10 @@
 <template>
     <v-layout class="search">
-        <v-flex xs10 md10 lg10 class="search__div">
+        <v-flex xs10 md11 lg11 class="search__div">
             <input type="search" name="search" class="search__input" v-model="filter" @keyup="enviaSearch(filter)" :placeholder="placeholderSearch">
         </v-flex>
-        <v-flex xs2 md2 lg2 >
-            <router-link :to="{ name: routerName }" class="" tag="button">
+        <v-flex xs2 md1 lg1 >
+            <router-link :to="{ name: routerName }" tag="button" class="search__button">
                 <span class="search__new"> <v-icon color="white" class="search__new-icon">add_circle</v-icon> Novo </span>
             </router-link>
         </v-flex>

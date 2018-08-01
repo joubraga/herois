@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app-background">
     <LayoutAdmin />
   </v-app>
 </template>
@@ -22,7 +22,7 @@
 </script>
 
 <style lang="css">
-  .app {
+  .app-background {
     background-color: #f5f7fa!important;
   }
 </style>

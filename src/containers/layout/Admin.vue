@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div>
       <Header :logo="imagem" />
 
       <main>
@@ -24,7 +24,6 @@
     data () {
       return {
         fixed: false,
-        right: true,
         imagem: 'caminho da imagem'
       }
     },

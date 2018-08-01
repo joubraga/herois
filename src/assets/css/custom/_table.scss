@@ -1,0 +1,28 @@
+.list__table {
+    & table {
+        background: transparent!important;
+    }
+    & thead {
+        background-color: transparent!important;
+    }
+    & thead tr {
+        border-bottom: none!important;
+    }
+    & tbody tr {
+        background-color: #ffffff;
+        height: 90px;
+        margin-bottom: 1.5%;
+    }
+}
+
+.table__actions {
+    &-item {
+        margin-right: 10%;
+        margin-left: 10%;
+        text-decoration: none!important;
+    }
+    &-item i {
+        color: #4687df!important;
+    }
+}
+
