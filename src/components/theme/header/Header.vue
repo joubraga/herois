@@ -1,10 +1,16 @@
 <template>
-    <v-toolbar app flat color="white">
-        <!-- <img :src="image" alt="200x45" width="200" height="45" class="toolbar__logo"> -->
-        <div class="toolbar__logo"> {{ image }} </div>
+    <header>
+        <v-toolbar app flat color="white">
+            <!-- <img :src="image" alt="200x45" width="200" height="45" class="toolbar__logo"> -->
+            <div class="toolbar__logo"> {{ image }} </div>
+            <v-spacer></v-spacer>
+            <UserAvatar class="toolbar__avatar" :avatarSize="'52px'" />
+        </v-toolbar>
         <v-spacer></v-spacer>
-        <UserAvatar class="toolbar__avatar" :avatarSize="'52px'" />
-    </v-toolbar>
+        <v-toolbar class="toolbar__page" flat style="">
+            <v-toolbar-title> Nome da Rota </v-toolbar-title>
+        </v-toolbar>
+    </header>
 </template>
 
 <script>
@@ -40,5 +46,9 @@
         align-items: center;
         font-weight: 500;
         color: #abb3be;
+    }
+
+    .toolbar__page {
+        background-color: #4687df!important; margin-top: 60px!important; color: #ffffff!important;
     }
 </style>
