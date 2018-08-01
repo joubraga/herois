@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <LayoutAdmin />
   </v-app>
 </template>
@@ -8,7 +8,7 @@
   import LayoutAdmin from './containers/layout/Admin'
 
   export default {
-    name: 'Heróis',
+    name: 'Herois',
     data () {
       return {
         fixed: false,
@@ -20,3 +20,9 @@
     }
   }
 </script>
+
+<style lang="css">
+  .app {
+    background-color: #f5f7fa!important;
+  }
+</style>

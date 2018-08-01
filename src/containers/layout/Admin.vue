@@ -1,8 +1,6 @@
 <template>
     <div class="main">
-      <header>
-        <Header :logo="imagem" />
-      </header>
+      <Header :logo="imagem" />
 
       <main>
         <v-content>
