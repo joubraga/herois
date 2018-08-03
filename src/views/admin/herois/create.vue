@@ -8,56 +8,67 @@
                         <v-flex xs12 sm4 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Nome</label>
-                                <input type="text" name="nome" v-model="form.nome" class="form__input" />
+                                <v-text-field name="nome" solo v-model="form.nome" ></v-text-field>
                             </div>
                         </v-flex>
 
                         <v-flex xs12 sm4 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Especialidades</label>
-                                <input type="text" name="especialidades" v-model="form.especialidades" class="form__input" />
+                                <v-select
+                                    :items="states"
+                                    v-model="form.especialidades"
+                                    multiple
+                                    max-height="400"
+                                    solo                                    
+                                ></v-select>
                             </div>
                         </v-flex>
 
                         <v-flex xs12 sm4 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Classe</label>
-                                <input type="text" name="classe" v-model="form.classe" class="form__input" />
+                                <v-select
+                                    :items="states"
+                                    v-model="form.classe"
+                                    max-height="400"
+                                    solo                                    
+                                ></v-select>
                             </div>
                         </v-flex>
 
                         <v-flex xs12 sm2 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Vida</label>
-                                <input type="number" name="vida" v-model="form.vida" class="form__input" />
+                                <v-text-field type="number" name="vida" solo v-model="form.vida" ></v-text-field>
                             </div>
                         </v-flex>
                         
                         <v-flex xs12 sm2 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Defesa</label>
-                            <input type="number" name="defesa" v-model="form.defesa" class="form__input" />
+                                <v-text-field type="number" name="defesa" solo v-model="form.defesa" ></v-text-field>
                         </div>
                         </v-flex>
 
                         <v-flex xs12 sm2 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Dano</label>
-                                <input type="number" name="dano" v-model="form.dano" class="form__input" />
+                                <v-text-field type="number" name="dano" solo v-model="form.dano" ></v-text-field>
                             </div>
                         </v-flex>
 
                         <v-flex xs12 sm2 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Velocidade Ataque</label>
-                                <input type="number" name="vAtaque" v-model="form.vAtaque" class="form__input" />
+                                <v-text-field type="number" name="vAtaque" solo v-model="form.vAtaque" ></v-text-field>
                             </div>
                         </v-flex>
 
                         <v-flex xs12 sm2 d-flex>
                             <div class="form__input-div-custom">
                                 <label class="form__input-label">Velocidade Movimento</label>
-                                <input type="number" name="vMovimento" v-model="form.vMovimento" class="form__input" />
+                                <v-text-field type="number" name="vMovimento" solo v-model="form.vMovimento" ></v-text-field>
                             </div>
                         </v-flex>
 
@@ -103,3 +114,20 @@
         }
     }
 </script>
+
+<style lang="css">
+    .v-input__slot {
+        box-shadow: none!important;
+        border: 1px solid #e6e9ed!important;
+        width: auto;
+        padding: 2.5%;
+        border-radius: 5px;
+        color: #656d78;
+        width: 100%;
+    }
+
+    .form__input-div-custom .v-select, .form__input-div-custom .v-text-field {
+        width: 100%;
+    }
+</style>
+
