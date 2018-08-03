@@ -3,17 +3,11 @@
             <v-card flat class="gallery__card">
                 <v-flex xs12 md12 lg12 class="gallery__div">
                     
-                    <h2 class="gallery__title"> Galaeria dos personagem </h2>
+                    <h2 class="gallery__title"> Galeria do personagem </h2>
 
                     <GalleryPhotos :qtdPhotos="8" />
                     
                     <v-spacer></v-spacer>
-
-                    <!-- <input type="file" ref="dropFile" style="display: none;">
-
-                    <div class="gallery__div-drag" @click="$refs.dropFile.click()">
-                        <h2> Drag and drop here </h2>
-                    </div> -->
 
                     <vue-dropzone 
                         class="gallery__div-drag" 
@@ -58,10 +52,3 @@
         }
     }
 </script>
-
-<style>
-  .upload-action.is-dragging {
-    background: green;
-  }
-</style> 
-

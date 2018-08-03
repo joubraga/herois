@@ -64,4 +64,4 @@ export class Request {
     }
 }
 
-export { get, post, put, deleted }
+export default Request
