@@ -1,0 +1,29 @@
+.gallery {
+   
+    &__div {
+
+    }
+    &__card {
+        padding: 2%;
+    }
+    &__title {
+        color: #4687df;
+        margin-bottom: 1%;
+    }
+    &__div-drag {
+        border: 4px dotted #e6e9ed;
+        color: #e6e9ed;
+        height: 280px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+    }
+    &__preview {
+        margin: 1% 1% 1% 0;
+        height: 150px;
+        background-color: #f5f7fa;
+    }
+}

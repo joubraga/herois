@@ -8,14 +8,14 @@
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                     <template slot="items" slot-scope="props">
                         <td>imagem</td>
-                        <td class="text-xs-center"> {{ props.item.nome }} </td>
-                        <td class="text-xs-center"> {{ props.item.classe }} </td>
-                        <td class="text-xs-center"> {{ props.item.especialidades }} </td>
-                        <td class="text-xs-center"> {{ props.item.vida }} </td>
-                        <td class="text-xs-center"> {{ props.item.defesa }} </td>
-                        <td class="text-xs-center"> {{ props.item.dano }} </td>
-                        <td class="text-xs-center"> {{ props.item.vAtaque }} </td>
-                        <td class="text-xs-center"> {{ props.item.vMovimento }} </td>
+                        <td class="text-xs-left"> {{ props.item.nome }} </td>
+                        <td class="text-xs-left"> {{ props.item.classe }} </td>
+                        <td class="text-xs-left"> {{ props.item.especialidades }} </td>
+                        <td class="text-xs-left"> {{ props.item.vida }} </td>
+                        <td class="text-xs-left"> {{ props.item.defesa }} </td>
+                        <td class="text-xs-left"> {{ props.item.dano }} </td>
+                        <td class="text-xs-left"> {{ props.item.vAtaque }} </td>
+                        <td class="text-xs-left"> {{ props.item.vMovimento }} </td>
                         <td> <ActionList @delete="exclude" :routerEdit="'EditarPersonagem'" :id="props.item.id"/> </td>
                     </template>
                     <div class="spacer"></div>

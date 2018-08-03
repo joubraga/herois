@@ -1,5 +1,5 @@
 <template>
-     <v-card-actions class="table__actions">
+    <v-card-actions class="table__actions">
         <v-spacer></v-spacer>
 
         <router-link class="table__actions-item" tag="a" @click="exclude(id)" :to="'#'"> 
@@ -20,7 +20,7 @@
         props: {
             id: {
                 type: Number,
-                default: ''
+                required: true
             },
             routerEdit: {
                 type: String,
@@ -32,4 +32,3 @@
         }
     }
 </script>
-

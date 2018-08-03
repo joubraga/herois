@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
 
         <v-toolbar class="toolbar__page" flat style="">
-            <v-toolbar-title> {{ list }} </v-toolbar-title>
+            <v-toolbar-title> a </v-toolbar-title>
         </v-toolbar>
     </header>
 </template>
@@ -25,12 +25,7 @@
                 default: ''
             }
         },
-        created () {
-            console.log('ROUTER ==> ', this.$router.matched)
-        },
-        computed: {
-            list: x => 'a'
-        },
+        created () {},
         data () {
             return {
                 title: 'Teste',
