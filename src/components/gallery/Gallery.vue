@@ -2,12 +2,25 @@
     <v-container class="gallery">
             <v-card flat class="gallery__card">
                 <v-flex xs12 md12 lg12 class="gallery__div">
+                    
                     <h2 class="gallery__title"> Galaeria dos personagem </h2>
+
                     <GalleryPhotos :qtdPhotos="8" />
+                    
                     <v-spacer></v-spacer>
-                    <div class="gallery__div-drag">
+
+                    <!-- <input type="file" ref="dropFile" style="display: none;">
+
+                    <div class="gallery__div-drag" @click="$refs.dropFile.click()">
                         <h2> Drag and drop here </h2>
-                    </div>
+                    </div> -->
+
+                    <vue-dropzone 
+                        class="gallery__div-drag" 
+                        ref="myVueDropzone" 
+                        id="dropzone" 
+                        :options="dropzoneOptions"
+                    />
                 </v-flex>
             </v-card>
         </v-container>    
@@ -15,16 +28,40 @@
 
 <script>
     import GalleryPhotos from './GalleryPhotos'
+    import vue2Dropzone from 'vue2-dropzone'
+    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
     export default {
         name: 'Gallery',
         components: {
-            GalleryPhotos
+            GalleryPhotos,
+             vueDropzone: vue2Dropzone
         },
         data () {
             return {
+                dropzoneOptions: {
+                    url: 'https://httpbin.org/post',
+                    thumbnailWidth: 150,
+                    maxFilesize: 0.5,
+                    headers: { "My-Awesome-Header": "header value" }
+                },
+                file: []
+            }
+        },
+        methods: {
+             init (uploader) {
+                // javascript uploader instance
+            },
+            addedFile (file) {
+                this.files.push(file)
             }
         }
     }
 </script>
+
+<style>
+  .upload-action.is-dragging {
+    background: green;
+  }
+</style> 
 

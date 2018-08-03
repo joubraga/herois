@@ -69,7 +69,7 @@
         <Gallery />
 
         <v-container>
-            <v-flex>
+            <v-flex right>
                  <v-btn dark large class="action__button-save"> <v-icon>check</v-icon> Salvar</v-btn>
             </v-flex>
         </v-container>
