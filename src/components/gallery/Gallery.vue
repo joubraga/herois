@@ -14,6 +14,7 @@
                         ref="myVueDropzone" 
                         id="dropzone" 
                         :options="dropzoneOptions"
+                        @vdropzone-sending="sendingImage"
                     />
                 </v-flex>
             </v-card>
@@ -24,6 +25,7 @@
     import GalleryPhotos from './GalleryPhotos'
     import vue2Dropzone from 'vue2-dropzone'
     import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+    import { ENDPOINT } from '../../api/config'
 
     export default {
         name: 'Gallery',
@@ -34,20 +36,11 @@
         data () {
             return {
                 dropzoneOptions: {
-                    url: 'https://httpbin.org/post',
+                    url: `${ENDPOINT}photos`,
                     thumbnailWidth: 150,
-                    maxFilesize: 0.5,
-                    headers: { "My-Awesome-Header": "header value" }
+                    maxFilesize: 0.5
                 },
                 file: []
-            }
-        },
-        methods: {
-             init (uploader) {
-                // javascript uploader instance
-            },
-            addedFile (file) {
-                this.files.push(file)
             }
         }
     }

@@ -134,7 +134,7 @@
             </v-card>
         </CardForm>
 
-        <Gallery />
+        <Gallery @vfileAdded="saveImage"/>
 
         <v-container>
             <v-flex right>
@@ -150,6 +150,7 @@
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
     import Request from '../../../request'
+    import GalleryPhotosVue from '../../../components/gallery/GalleryPhotos.vue';
 
     export default {
         name: 'CadastroPersonagem',
@@ -185,7 +186,8 @@
                     defesa: 0,
                     dano: 0,
                     vAtaque: 0,
-                    vMovimento: 0
+                    vMovimento: 0,
+                    photos: null
                 },
                 listaEspecialidades: [],
                 errorEspecialidades: false,
@@ -206,13 +208,12 @@
                             }
                         })
                     } catch (error) {
-                        
+                        console.log('Erro Post Herois -> ', error)
                     }
-                    
                 } else {
                     console.log('chegou aqui essa merda')
                 }
-            }
+            },
             // class_id\": 1,
             // \"name\":
             // \"Herói\",
@@ -253,4 +254,3 @@
     }
     
 </style>
-
