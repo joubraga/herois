@@ -9,9 +9,9 @@
                                 <div class="form__input-div-custom">
                                     <label class="form__input-label">Nome</label>
                                     <v-text-field 
-                                        name="nome" 
+                                        name="name" 
                                         solo 
-                                        v-model="form.nome" 
+                                        v-model="form.name" 
                                         :rules="[v => !!v || 'Campo Obrigatório']"  
                                         required
                                         >
@@ -24,8 +24,11 @@
                                     <label class="form__input-label">Especialidades</label>
                                     <v-select
                                         :items="listaEspecialidades"
-                                        v-model="form.especialidades"
+                                        v-model="form.specialties"
                                         multiple
+                                        item-value="id"
+                                        item-text="name"
+                                        return-object
                                         max-height="400"
                                         label="Selecione as especialidades do personagem"
                                         solo
@@ -40,11 +43,14 @@
                                     <label class="form__input-label">Classe</label>
                                     <v-select
                                         :items="listaClasse"
-                                        v-model="form.classe"
+                                        v-model="form.class_id"
                                         max-height="400"
                                         label="Seleciona a classe do personagem"
                                         solo
                                         required
+                                        item-value="id"
+                                        item-text="name"
+                                        return-object
                                         :rules="[v => !!v || 'Campo Obrigatório']"             
                                     ></v-select>
                                 </div>
@@ -56,9 +62,9 @@
                                     <v-text-field 
                                         type="number" 
                                         min="0"
-                                        name="vida"
+                                        name="health_points"
                                         solo
-                                        v-model="form.vida"
+                                        v-model="form.health_points"
                                         :rules="[v => !!v || 'Campo Obrigatório']"
                                         required
                                         >
@@ -72,9 +78,9 @@
                                     <v-text-field 
                                         type="number"
                                         min="0"
-                                        name="defesa"
+                                        name="defense"
                                         solo
-                                        v-model="form.defesa"
+                                        v-model="form.defense"
                                         :rules="[v => !!v || 'Campo Obrigatório']"
                                         required
                                         >
@@ -88,8 +94,8 @@
                                     <v-text-field
                                         type="number"
                                         min="0"
-                                        name="dano"
-                                        solo v-model="form.dano"
+                                        name="damage"
+                                        solo v-model="form.damage"
                                         :rules="[v => !!v || 'Campo Obrigatório']"
                                         required
                                         >
@@ -103,9 +109,9 @@
                                     <v-text-field
                                         type="number"
                                         min="0"
-                                        name="vAtaque"
+                                        name="attack_speed"
                                         solo
-                                        v-model="form.vAtaque"
+                                        v-model="form.attack_speed"
                                         :rules="[v => !!v || 'Campo Obrigatório']"
                                         required
                                         >
@@ -119,9 +125,9 @@
                                     <v-text-field
                                         type="number"
                                         min="0"
-                                        name="vMovimento"
+                                        name="movement_speed"
                                         solo
-                                        v-model="form.vMovimento"
+                                        v-model="form.movement_speed"
                                         :rules="[v => !!v || 'Campo Obrigatório']"
                                         required
                                         >
@@ -150,6 +156,7 @@
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
     import Request from '../../../request'
+    import GalleryPhotosVue from '../../../components/gallery/GalleryPhotos.vue';
 
     export default {
         name: 'CadastroPersonagem',
@@ -161,12 +168,12 @@
             try {
                 Request.get(`${ENDPOINT}specialties`).then(especialidades => {
                     if (especialidades.length > 0) {
-                        this.listaEspecialidades = especialidades.map(espec => espec.name)
+                        this.listaEspecialidades = especialidades.map(espec => espec)
                     }
                 })
                 Request.get(`${ENDPOINT}classes`).then(classes => {
                     if (classes.length > 0) {
-                        this.listaClasse = classes.map(classe => classe.name)
+                        this.listaClasse = classes.map(classe => classe)
                     }
                 })
             } catch (error) {
@@ -178,14 +185,15 @@
                 valid: true,
                 items: [],
                 form: {
-                    nome: '',
-                    especialidades: null,
-                    classe: null,
-                    vida: 0,
-                    defesa: 0,
-                    dano: 0,
-                    vAtaque: 0,
-                    vMovimento: 0
+                    name: '',
+                    specialties: null,
+                    class_id: null,
+                    health_points: 0,
+                    defense: 0,
+                    damage: 0,
+                    attack_speed: 0,
+                    movement_speed: 0,
+                    photos: null
                 },
                 listaEspecialidades: [],
                 errorEspecialidades: false,
@@ -200,31 +208,26 @@
             async saveHero () {
                 if (this.$refs.form.validate()) {
                     try {
+                        this.setEspecelidades()
+                        this.setClasses()      
                         Request.post(`${ENDPOINT}heroes`, this.form).then(response => {
                             if (response.status === 201) {
                                 alert('Personagem cadastrado com sucesso')
                             }
                         })
                     } catch (error) {
-                        
+                        console.log('Erro Post Herois -> ', error)
                     }
-                    
                 } else {
-                    console.log('chegou aqui essa merda')
+                    console.log('Erro ao salvar o Herói')
                 }
+            },
+            setEspecelidades () {
+                this.form.specialties = this.form.specialties.map(spec => spec.id)
+            },
+            setClasses () {
+                this.form.class_id = this.form.class_id.map(classe => classe.id)
             }
-            // class_id\": 1,
-            // \"name\":
-            // \"Herói\",
-            // \"health_points\": 100,
-            // \"defense\": 100,
-            // \"damage\": 100,
-            // \"attack_speed\": 1.0,
-            // \"movement_speed\": 300,
-            // \"specialties\": [1, 2],
-        },
-        computed: {
-            erroEspecialidades: error => this.errorEspecialidades ? '' : 'error-select',
         }
     }
 </script>
@@ -251,6 +254,10 @@
     .error--text .v-input__slot, .error-select {
         border: 1px solid #ff5252!important;
     }
+
+    .v-messages__message {
+        font-weight: 600;
+        font-size: 14px;
+    }
     
 </style>
-

@@ -12,8 +12,9 @@
                     <vue-dropzone 
                         class="gallery__div-drag" 
                         ref="myVueDropzone" 
-                        id="dropzone" 
-                        :options="dropzoneOptions"
+                        id="dropzone"
+                        :options="options"
+                        @vdropzone-files-added="uploaded"
                     />
                 </v-flex>
             </v-card>
@@ -24,6 +25,8 @@
     import GalleryPhotos from './GalleryPhotos'
     import vue2Dropzone from 'vue2-dropzone'
     import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+    import { ENDPOINT } from '../../api/config'
+    import axios from 'axios'
 
     export default {
         name: 'Gallery',
@@ -33,21 +36,42 @@
         },
         data () {
             return {
-                dropzoneOptions: {
-                    url: 'https://httpbin.org/post',
-                    thumbnailWidth: 150,
-                    maxFilesize: 0.5,
-                    headers: { "My-Awesome-Header": "header value" }
-                },
-                file: []
+                options: {
+                    url: `${ENDPOINT}photos`,
+                    autoProcessQueue: false,
+                    enqueueFile: true,
+                    chunking: true,
+                    forceChunking: true
+                }
             }
         },
         methods: {
-             init (uploader) {
-                // javascript uploader instance
-            },
-            addedFile (file) {
-                this.files.push(file)
+            uploaded: (file) => {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", `${ENDPOINT}photos`, true);
+
+                xhr.setRequestHeader("Content-Type", "multipart/form-data")
+                xhr.setRequestHeader('Access-Control-Request-Headers', 'authorization,cache-control,x-requested-with')
+
+                // Tem que ver como vai passar o data aqui :S
+                xhr.send(); 
+
+                // var formData = new FormData();
+                // formData.append('file', file[0], file[0].name)
+                // console.log('FD ==> ', formData.get('file'))
+                // let teste = formData.get('file')
+                // console.log('Teste ==> ', teste )
+                // axios({method: 'post', url: `${ENDPOINT}photos`, data: {file: file[0]},
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data', 
+                //         // 'Access-Control-Request-Headers': 'authorization,cache-control,x-requested-with',
+                //     }
+                // }).then(resp => {
+                //     console.log('Agora vai essa bosta', resp)
+                // }).catch (error => {
+                //     console.log('Claro que nao ne idiota')
+                // })
             }
         }
     }
