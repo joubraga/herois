@@ -1,9 +1,6 @@
 import Home from '../views/Home.vue'
 // import LayoutAdmin from './containers/layout/Admin'
 
-import ListaPersonagens from '../views/admin/herois/list'
-import CriarPersonagens from '../views/admin/herois/create'
-
 export default [
     {
         path: '/',
@@ -28,7 +25,7 @@ export default [
             {
                 path: '/personagens/lista',
                 name: 'ListaPersonagens',
-                component: ListaPersonagens,
+                component: () => import(/* webpackChunkName: "list" */ '../views/admin/herois/list.vue'),
                 metas: {
                     name: 'Lista dos Personagens',
                     breadcrumb: ' Personagens / Lista'            
@@ -37,7 +34,7 @@ export default [
             {
                 path: '/personagens/criar',
                 name: 'CriarPersonagens',
-                component: CriarPersonagens,
+                component: () => import(/* webpackChunkName: "create" */ '../views/admin/herois/create.vue'),
                 metas: {
                     name: 'Criar Personagem',
                     breadcrumb: 'Personagem / Criar'
@@ -46,7 +43,7 @@ export default [
             {
                 path: '/personagens/editar',
                 name: 'EditarPersonagem',
-                component: CriarPersonagens,
+                component: () => import(/* webpackChunkName: "editar" */ '../views/admin/herois/create.vue'),
                 metas: {
                     name: 'Editar Personagem',
                     breadcrumb: 'Personagem / Editar'

@@ -4,7 +4,7 @@
 
         <v-layout>
             <v-flex xs12 md12 lg12>
-                <v-data-table :headers="headers" :items="items" :loading="isLoading" class="list__table">
+                <v-data-table :headers="headers" :items="items" :loading="isLoading" class="list__table" :search="search">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                     <template slot="items" slot-scope="props">
                         <td>imagem</td>
