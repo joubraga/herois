@@ -1,0 +1,46 @@
+.gallery {
+   
+    &__div {
+
+    }
+    &__card {
+        padding: 2%;
+    }
+    &__title {
+        color: #4687df;
+        margin-bottom: 1%;
+    }
+    &__div-drag {
+        border: 4px dotted #e6e9ed;
+        color: #e6e9ed;
+        height: 280px;
+        width: 100%;
+        border-radius: 10px;
+        & span {
+            font-size: 32px;
+            color: #e6e9ed;
+            font-weight: 600;
+        }
+    }
+    &__preview {
+        margin: 1% 1% 1% 0;
+        height: 150px;
+        background-color: #f5f7fa;
+    }
+}
+
+.dropzone .dz-message {
+    margin: 6em!important;
+}
+
+@media screen and (max-width: 767px) {
+    .gallery {
+        &__preview {
+            width: 45%;
+            flex-wrap: wrap!important;
+        }
+        &__wrap {
+            flex-wrap: wrap;
+        }
+    }
+}

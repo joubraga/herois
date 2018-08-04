@@ -1,0 +1,20 @@
+.form__input {
+    border: 1px solid #e6e9ed;
+    width: auto;
+    padding: 2.5%;
+    border-radius: 5px;
+    color: #656d78;
+    &-div-custom {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    &-div-custom input {
+        width: 100%;
+    }
+    &-label {
+        color: #aab2bd;
+        font-weight: 600;
+    }
+}
