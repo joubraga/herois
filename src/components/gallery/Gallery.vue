@@ -47,31 +47,26 @@
         },
         methods: {
             uploaded: (file) => {
+                // var xhr = new XMLHttpRequest();
+                // xhr.open("POST", `${ENDPOINT}photos`, true);
+                // // xhr.setRequestHeader('Access-Control-Request-Headers', 'authorization,cache-control,x-requested-with')
+                // const fd = new FormData()
+                // fd.append('file', file[0], file[0].name)
+                // xhr.send(fd)
 
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", `${ENDPOINT}photos`, true);
+                const instance = axios.create({
+                    baseURL: `${ENDPOINT}`
+                })
 
-                xhr.setRequestHeader("Content-Type", "multipart/form-data")
-                xhr.setRequestHeader('Access-Control-Request-Headers', 'authorization,cache-control,x-requested-with')
+                axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+                axios.defaults.headers.post['Access-Control-Request-Headers'] = 'authorization,cache-control,x-requested-with'
 
-                // Tem que ver como vai passar o data aqui :S
-                xhr.send(); 
+                const fd = new FormData()
+                fd.append('file', file[0], file[0].name)
 
-                // var formData = new FormData();
-                // formData.append('file', file[0], file[0].name)
-                // console.log('FD ==> ', formData.get('file'))
-                // let teste = formData.get('file')
-                // console.log('Teste ==> ', teste )
-                // axios({method: 'post', url: `${ENDPOINT}photos`, data: {file: file[0]},
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data', 
-                //         // 'Access-Control-Request-Headers': 'authorization,cache-control,x-requested-with',
-                //     }
-                // }).then(resp => {
-                //     console.log('Agora vai essa bosta', resp)
-                // }).catch (error => {
-                //     console.log('Claro que nao ne idiota')
-                // })
+                instance.post('photos', fd).then(res => {
+                    console.log('Sera que foi essa merda => ', res)
+                })
             }
         }
     }

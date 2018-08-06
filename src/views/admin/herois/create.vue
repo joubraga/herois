@@ -156,7 +156,7 @@
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
     import Request from '../../../request'
-    import GalleryPhotosVue from '../../../components/gallery/GalleryPhotos.vue';
+    // import GalleryPhotos from '../../../components/gallery/GalleryPhotos.vue'
 
     export default {
         name: 'CadastroPersonagem',
@@ -173,7 +173,9 @@
                 })
                 Request.get(`${ENDPOINT}classes`).then(classes => {
                     if (classes.length > 0) {
-                        this.listaClasse = classes.map(classe => classe)
+                        console.log('Classes == ', classes)
+                        this.listaClasse = classes
+                        console.log('Lista Class == ', this.listaClasse)
                     }
                 })
             } catch (error) {
@@ -185,15 +187,15 @@
                 valid: true,
                 items: [],
                 form: {
-                    name: '',
+                    name: 'Brian',
                     specialties: null,
                     class_id: null,
-                    health_points: 0,
-                    defense: 0,
-                    damage: 0,
-                    attack_speed: 0,
-                    movement_speed: 0,
-                    photos: null
+                    health_points: 2400,
+                    defense: 190,
+                    damage: 330,
+                    attack_speed: 1.8,
+                    movement_speed: 320,
+                    photos: [31, 32, 33, 34, 35]
                 },
                 listaEspecialidades: [],
                 errorEspecialidades: false,
@@ -209,7 +211,8 @@
                 if (this.$refs.form.validate()) {
                     try {
                         this.setEspecelidades()
-                        this.setClasses()      
+                        this.setClasses()
+                        console.log('FORM ==> ', this.form)
                         Request.post(`${ENDPOINT}heroes`, this.form).then(response => {
                             if (response.status === 201) {
                                 alert('Personagem cadastrado com sucesso')
@@ -226,7 +229,7 @@
                 this.form.specialties = this.form.specialties.map(spec => spec.id)
             },
             setClasses () {
-                this.form.class_id = this.form.class_id.map(classe => classe.id)
+                this.form.class_id = this.form.class_id.id
             }
         }
     }

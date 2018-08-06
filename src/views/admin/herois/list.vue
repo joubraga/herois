@@ -1,6 +1,6 @@
 <template>
     <v-container class="list">
-        <Search @search="startSearch" :routerName="'CriarPersonagens'"/>
+        <Search @search="startSearch" :routerName="'CriarPersonagens'" v-model="search"/>
 
         <v-layout>
             <v-flex xs12 md12 lg12>
@@ -17,6 +17,11 @@
                         <td class="text-xs-left"> {{ props.item.vAtaque }} </td>
                         <td class="text-xs-left"> {{ props.item.vMovimento }} </td>
                         <td> <ActionList @delete="exclude" :routerEdit="'EditarPersonagem'" :id="props.item.id"/> </td>
+                    </template>
+                    <template slot="no-data">
+                        <v-alert :value="true" color="error" icon="warning">
+                            Não há resultado com o valor {{ search }}
+                        </v-alert>
                     </template>
                     <div class="spacer"></div>
                 </v-data-table>
@@ -40,22 +45,22 @@
         },
         data() {
             return {
-                model: '',
+                search: '',
                 items: [
                     {id: 1, nome: 'Jou', classe: 'Lutador', especialidades: 'anti-tanque', vida: 2500, defesa: 250, dano: 600, vAtaque: 2.5, vMovimento: 5},
-                    {id: 2, nome: 'Jou 2', classe: 'Arqueiro', especialidades: 'Ataque a Distancia', vida: 2500, defesa: 250, dano: 600, vAtaque: 2.5, vMovimento: 5}
+                    {id: 2, nome: 'Jou 2', classe: 'Arqueiro', especialidades: 'Ataque a Distancia', vida: 2500, defesa: 250, dano: 600, vAtaque: 2.8, vMovimento: 10}
                 ],
                 isLoading: false,
                 headers: [
                     { sortable: false },
-                    { text: 'Nome', value: '' },
-                    { text: 'Classe', value: '' },
-                    { text: 'Especialidades', value: '' },
-                    { text: 'Vida', value: '' },
-                    { text: 'Defesa', value: '' },
-                    { text: 'Dano', value: '' },
-                    { text: 'Vel. de Ataque', value: '' },
-                    { text: 'Vel.de Movimento', value: '' },
+                    { text: 'Nome', value: 'nome' },
+                    { text: 'Classe', value: 'classe' },
+                    { text: 'Especialidades', value: 'especialidades' },
+                    { text: 'Vida', value: 'vida' },
+                    { text: 'Defesa', value: 'defesa' },
+                    { text: 'Dano', value: 'dano' },
+                    { text: 'Vel. de Ataque', value: 'vAtaque' },
+                    { text: 'Vel.de Movimento', value: 'vMovimento' },
                     { sortable: false}
                 ],
             }
@@ -68,11 +73,10 @@
                 try {
                     if (filter.length > 0) {
                         this.isLoading = !this.isLoading
-                        axios.get(`${ENDPOINT}herois`).then((response) => {
-                            if (response.status === 200) {
-                                this.isLoading = false
-                            }
-                        })
+                        this.search = filter                 
+                    } else {
+                        this.search = ''
+                        this.isLoading = !this.isLoading
                     }
                 } catch (error) {
                     this.isLoading = false
