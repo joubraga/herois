@@ -2,7 +2,7 @@
     <v-card-actions class="table__actions">
         <v-spacer></v-spacer>
 
-        <router-link class="table__actions-item" tag="a" @click="exclude(id)" :to="'#'"> 
+        <router-link class="table__actions-item" tag="button" @click="exclude(id)" :to="'#'"> 
             <v-icon> delete </v-icon>
         </router-link>
 
@@ -28,7 +28,9 @@
             }
         },
         methods: {
-            exclude: id => this.$emit('exlude', id)
+            exclude () {
+                alert('achou')
+            }
         }
     }
 </script>

@@ -4,7 +4,12 @@
 
         <v-layout>
             <v-flex xs12 md12 lg12>
-                <v-data-table :headers="headers" :items="items" :loading="isLoading" class="list__table" :search="search">
+                <v-data-table 
+                    :headers="headers" 
+                    :items="items" 
+                    :loading="isLoading" 
+                    class="list__table" 
+                    :search="search">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                     <template slot="items" slot-scope="props">
                         <td>  <img :src="props.item.photo" alt=""></td>
@@ -16,7 +21,12 @@
                         <td class="text-xs-left"> {{ props.item.damage }} </td>
                         <td class="text-xs-left"> {{ props.item.attack_speed }} </td>
                         <td class="text-xs-left"> {{ props.item.movement_speed }} </td>
-                        <td> <ActionList @delete="exclude" :routerEdit="'EditarPersonagem'" :id="props.item.id"/> </td>
+                        <td> 
+                            <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)"> delete </v-icon>
+                            <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})">
+                                <v-icon class="mr-2"> edit </v-icon>
+                            </router-link>
+                        </td>
                     </template>
                     <template slot="no-data">
                         <v-alert :value="true" color="error" icon="warning">
@@ -28,12 +38,47 @@
             </v-flex>
         </v-layout>
 
+        <!-- <Modal @closeModal="closeDialog" :dialog="dialog" @excludeConfirm="exclude" /> -->
+
+        <v-dialog v-model="dialog" width="500" >
+            <v-card>
+                <v-card-title class="headline lighten-2 error"  primary-title >
+                    Excluir
+                </v-card-title>
+
+                <v-card-text>
+                    Você realmente deseja excluir este herói?
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" flat @click="closeDialog" >
+                        Cancelar
+                    </v-btn>
+
+                    <v-btn color="primary" flat @click="exclude" >
+                        Excluir
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-snackbar v-model="snackbar" :color="color" :multi-line="mode === 'multi-line'" :timeout="timeout" :vertical="mode === 'vertical'" >
+            {{ text }}
+            <v-btn dark flat @click="snackbar = false" >
+                Close
+            </v-btn>
+        </v-snackbar>
+
     </v-container>
 </template>
 
 <script>
     import axios from 'axios'
     import ActionList from '../../../components/actions/TableActions'
+    import Modal from '../../../components/model/Simple'
     import Search from '../../../components/filter/Search'
     import { ENDPOINT } from '../../../api/config'    
 
@@ -41,13 +86,16 @@
         name: 'ListaHerois',
         components: {
             Search,
-            ActionList
+            ActionList,
+            Modal
         },
         data () {
             return {
                 search: '',
+                dialog: false,
                 items: [],
                 isLoading: false,
+                idItemExclude: '',
                 headers: [
                     { sortable: false },
                     { text: 'Nome', value: 'name' },
@@ -60,13 +108,15 @@
                     { text: 'Vel.de Movimento', value: 'movement_speed' },
                     { sortable: false}
                 ],
+                snackbar: false,
+                color: 'success',
+                mode: '',
+                timeout: 4000,
+                text: 'Herói excluido com sucesso'
             }
         },
         created () {
             this.setList()
-        },
-        computed: {
-            newList: list => list.length > 0 ? this.items = list : []
         },
         methods: {
             startSearch (filter) {
@@ -83,16 +133,34 @@
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
                 }
             },
-            exclude (id) {
+            deleteItem (item) {
+                const index = this.desserts.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            },
+            setexcludeId (id) {
+                this.idItemExclude = id
+                this.dialog = true
+            },
+            exclude () {
                 try {
-                    axios.delete(`${ENDPOINT}herois`, id).then((response) => {
-                        if (response.status === 200) {
-                            console.log('Excluido com sucesso')
-                        }
-                    })
+                    if (this.idItemExclude > 0) {
+                        axios.delete(`${ENDPOINT}heroes/${this.idItemExclude}`).then((response) => {
+                            if (response.status === 200) {
+                                this.snackbar = true
+                                this.dialog = false
+                                this.idItemExclude = ''
+                                this.setList()
+                            }
+                        })
+                    }
                 } catch (error) {
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
+                    this.idItemExclude = ''
                 }
+            },
+            closeDialog () {
+                this.dialog = false
+                this.idItemExclude = false
             },
             setList () {
                 axios.get(`${ENDPOINT}heroes`).then(res => {

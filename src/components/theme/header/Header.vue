@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            setRoute (routes) {
+            // setRoute (routes) {
                 // console.log('Router Path --> ', this.$route.path)
                 // console.log('Router ==> ', routes)
                 // return routes.forEach((value) => {
@@ -44,7 +44,7 @@
                 //         return value.name
                 //     }
                 // })
-            }
+            // }
         },
         components: {
             UserAvatar
