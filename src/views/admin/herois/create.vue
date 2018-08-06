@@ -156,6 +156,7 @@
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
     import Request from '../../../request'
+    import axios from 'axios'
     // import GalleryPhotos from '../../../components/gallery/GalleryPhotos.vue'
 
     export default {
@@ -187,15 +188,15 @@
                 valid: true,
                 items: [],
                 form: {
-                    name: 'Brian',
+                    name: '',
                     specialties: null,
                     class_id: null,
-                    health_points: 2400,
-                    defense: 190,
-                    damage: 330,
-                    attack_speed: 1.8,
-                    movement_speed: 320,
-                    photos: [31, 32, 33, 34, 35]
+                    health_points: 0,
+                    defense: 0,
+                    damage: 0,
+                    attack_speed: 0,
+                    movement_speed: 0,
+                    photos: [76, 77, 78, 79, 80]
                 },
                 listaEspecialidades: [],
                 errorEspecialidades: false,
@@ -213,7 +214,7 @@
                         this.setEspecelidades()
                         this.setClasses()
                         console.log('FORM ==> ', this.form)
-                        Request.post(`${ENDPOINT}heroes`, this.form).then(response => {
+                        axios.post(`${ENDPOINT}heroes`, this.form).then(response => {
                             if (response.status === 201) {
                                 alert('Personagem cadastrado com sucesso')
                             }

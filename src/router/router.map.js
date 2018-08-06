@@ -17,6 +17,7 @@ export default [
     },
     {
         path: '/personagens',
+        redirect: '/personagens/lista',
         name: 'personagens',
         component: {
             render (c) { return c('router-view') }
@@ -27,7 +28,7 @@ export default [
                 name: 'ListaPersonagens',
                 component: () => import(/* webpackChunkName: "list" */ '../views/admin/herois/list.vue'),
                 metas: {
-                    name: 'Lista dos Personagens',
+                    label: 'Lista dos Personagens',
                     breadcrumb: ' Personagens / Lista'            
                 }
             },

@@ -25,11 +25,25 @@
                 default: ''
             }
         },
-        created () {},
+        created () {
+            // this.setRoute(this.$route.matched)
+        },
         data () {
             return {
                 title: 'Teste',
                 image: 'LOGO 200 x 45'
+            }
+        },
+        methods: {
+            setRoute (routes) {
+                // console.log('Router Path --> ', this.$route.path)
+                // console.log('Router ==> ', routes)
+                // return routes.forEach((value) => {
+                //     console.log('Value ==> ', value)
+                //     if (value.path === this.$route.path) {
+                //         return value.name
+                //     }
+                // })
             }
         },
         components: {

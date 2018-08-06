@@ -6,6 +6,9 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store'
 import '@/assets/css/style.scss'
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+
 
 Vue.config.productionTip = false
 
