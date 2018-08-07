@@ -3,7 +3,7 @@
         <CardForm>
             <v-card flat slot="form">
                 <v-container fluid grid-list-xl>
-                    <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
                         <v-layout wrap align-center>
                             <v-flex xs12 sm4 d-flex>
                                 <div class="form__input-div-custom">
