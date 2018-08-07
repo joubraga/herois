@@ -42,7 +42,7 @@ export default [
                 }
             },
             {
-                path: '/personagens/editar',
+                path: '/personagens/editar/:id',
                 name: 'EditarPersonagem',
                 component: () => import(/* webpackChunkName: "editar" */ '../views/admin/herois/create.vue'),
                 metas: {

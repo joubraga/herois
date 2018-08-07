@@ -1,7 +1,9 @@
 <template>
     <v-layout wrap>
         <v-flex xs12 sm12 d-flex class="gallery__wrap">
-            <div class="gallery__preview"  v-for="(index, value) in qtdPhotos" :key="index"> {{ value }} </div>
+            <div class="gallery__preview" v-for="(url, index) in photosUrl" :key="index"> 
+                <img :src="url" alt="">
+            </div>
         </v-flex>
     </v-layout>
 </template>
@@ -13,6 +15,9 @@
             qtdPhotos: {
                 type: Number,
                 required: true
+            },
+            photosUrl: {
+                default: []
             }
         },
         data () {

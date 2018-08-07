@@ -22,10 +22,13 @@
                         <td class="text-xs-left"> {{ props.item.attack_speed }} </td>
                         <td class="text-xs-left"> {{ props.item.movement_speed }} </td>
                         <td> 
-                            <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)"> delete </v-icon>
-                            <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})">
-                                <v-icon class="mr-2"> edit </v-icon>
-                            </router-link>
+                            <v-card-actions class="table__actions">
+                                <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)"> delete </v-icon>
+                                <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})">
+                                    <v-icon class="mr-2"> edit </v-icon>
+                                </router-link>
+                            <v-spacer></v-spacer>
+                            </v-card-actions>
                         </td>
                     </template>
                     <template slot="no-data">
@@ -37,8 +40,6 @@
                 </v-data-table>
             </v-flex>
         </v-layout>
-
-        <!-- <Modal @closeModal="closeDialog" :dialog="dialog" @excludeConfirm="exclude" /> -->
 
         <v-dialog v-model="dialog" width="500" >
             <v-card>
@@ -78,7 +79,6 @@
 <script>
     import axios from 'axios'
     import ActionList from '../../../components/actions/TableActions'
-    import Modal from '../../../components/model/Simple'
     import Search from '../../../components/filter/Search'
     import { ENDPOINT } from '../../../api/config'    
 
@@ -86,8 +86,7 @@
         name: 'ListaHerois',
         components: {
             Search,
-            ActionList,
-            Modal
+            ActionList
         },
         data () {
             return {

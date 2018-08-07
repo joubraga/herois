@@ -140,7 +140,7 @@
             </v-card>
         </CardForm>
 
-        <Gallery />
+        <Gallery :photosUrl="photosUrl"/>
 
         <v-container>
             <v-flex right>
@@ -165,6 +165,15 @@
             CardForm,
             Gallery
         },
+        created () {
+            if (this.$route.params.id) {
+                this.$http.get(`${ENDPOINT}heroes/${this.$route.params.id}`).then(res => {
+                    this.arraPhotos = this.getPhotosById(res.body.photos)
+                    this.form = res.data
+                    this.edit = true
+                })
+            }
+        },
         mounted () {
             try {
                 Request.get(`${ENDPOINT}specialties`).then(especialidades => {
@@ -174,9 +183,7 @@
                 })
                 Request.get(`${ENDPOINT}classes`).then(classes => {
                     if (classes.length > 0) {
-                        console.log('Classes == ', classes)
                         this.listaClasse = classes
-                        console.log('Lista Class == ', this.listaClasse)
                     }
                 })
             } catch (error) {
@@ -187,6 +194,7 @@
             return {
                 valid: true,
                 items: [],
+                edit: false,
                 form: {
                     name: '',
                     specialties: null,
@@ -196,8 +204,9 @@
                     damage: 0,
                     attack_speed: 0,
                     movement_speed: 0,
-                    photos: [76, 77, 78, 79, 80]
+                    photos: []
                 },
+                photosUrl: [],
                 listaEspecialidades: [],
                 errorEspecialidades: false,
                 errorClasse: false,
@@ -231,6 +240,17 @@
             },
             setClasses () {
                 this.form.class_id = this.form.class_id.id
+            },
+            getPhotosById (photos) {
+                try {
+                    photos.forEach((id) => {
+                            this.$http.get(`${ENDPOINT}photos/${id}`).then((res) => {
+                            this.photosUrl.push(res.url)
+                        })
+                    })
+                } catch (error) {
+                    console.log('Erro ao tentar coletar imagem ', error)                    
+                }
             }
         }
     }

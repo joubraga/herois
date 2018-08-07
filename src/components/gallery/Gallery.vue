@@ -5,7 +5,7 @@
                     
                     <h2 class="gallery__title"> Galeria do personagem </h2>
 
-                    <GalleryPhotos :qtdPhotos="8" />
+                    <GalleryPhotos :qtdPhotos="qtdPhotos" :photosUrl="photosUrl" />
                     
                     <v-spacer></v-spacer>
 
@@ -30,12 +30,18 @@
 
     export default {
         name: 'Gallery',
+        props: {
+            photosUrl: {
+                default: []
+            }
+        },
         components: {
             GalleryPhotos,
              vueDropzone: vue2Dropzone
         },
         data () {
             return {
+                qtdPhotos: 8,
                 options: {
                     url: `${ENDPOINT}photos`,
                     autoProcessQueue: false,
@@ -47,13 +53,6 @@
         },
         methods: {
             uploaded: (file) => {
-                // var xhr = new XMLHttpRequest();
-                // xhr.open("POST", `${ENDPOINT}photos`, true);
-                // // xhr.setRequestHeader('Access-Control-Request-Headers', 'authorization,cache-control,x-requested-with')
-                // const fd = new FormData()
-                // fd.append('file', file[0], file[0].name)
-                // xhr.send(fd)
-
                 const instance = axios.create({
                     baseURL: `${ENDPOINT}`
                 })
