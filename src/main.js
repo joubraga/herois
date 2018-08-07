@@ -12,7 +12,6 @@ import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);
 Vue.use(VueResource)
 
-
 Vue.config.productionTip = false
 
 new Vue({

@@ -43,7 +43,7 @@
         name: 'Gallery',
         props: {
             photosUrl: {
-                default: []
+                type: Array
             }
         },
         components: {
@@ -83,9 +83,8 @@
             },
             save (formData) {
                 this.currentStatus = STATUS_SAVING
-
-                this.upload(formData).then(x => {
-                    this.currentStatus = STATUS_SUCCESS
+                this.upload(formData).then(() => {
+                    this.currentStatus = STATUS_INITIAL
                 }).catch(err => {
                     this.uploadError = err.response
                     this.currentStatus = STATUS_FAILED
@@ -102,7 +101,9 @@
                 this.save(formData);
             },
             upload(formData) {
-                return this.$http.post(`${ENDPOINT}photos`, formData).then(x => x.data)
+                return this.$http.post(`${ENDPOINT}photos`, formData).then(image => {
+                    this.$emit('upload', image.body)
+                })
             }
         }
     }
