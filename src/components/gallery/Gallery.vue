@@ -26,7 +26,6 @@
     import vue2Dropzone from 'vue2-dropzone'
     import 'vue2-dropzone/dist/vue2Dropzone.min.css'
     import { ENDPOINT } from '../../api/config'
-    import axios from 'axios'
 
     export default {
         name: 'Gallery',
@@ -53,19 +52,20 @@
         },
         methods: {
             uploaded: (file) => {
-                const instance = axios.create({
-                    baseURL: `${ENDPOINT}`
-                })
+                console.log('Arquivo =: ', file)
+                // const instance = axios.create({
+                //     baseURL: `${ENDPOINT}`
+                // })
 
-                axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
-                axios.defaults.headers.post['Access-Control-Request-Headers'] = 'authorization,cache-control,x-requested-with'
+                // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+                // axios.defaults.headers.post['Access-Control-Request-Headers'] = 'authorization,cache-control,x-requested-with'
 
-                const fd = new FormData()
-                fd.append('file', file[0], file[0].name)
+                // const fd = new FormData()
+                // fd.append('file', file[0], file[0].name)
 
-                instance.post('photos', fd).then(res => {
-                    console.log('Sera que foi essa merda => ', res)
-                })
+                // instance.post('photos', fd).then(res => {
+                //     console.log('Sera que foi essa merda => ', res)
+                // })
             }
         }
     }

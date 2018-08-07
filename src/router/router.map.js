@@ -27,8 +27,8 @@ export default [
                 path: '/personagens/lista',
                 name: 'ListaPersonagens',
                 component: () => import(/* webpackChunkName: "list" */ '../views/admin/herois/list.vue'),
-                metas: {
-                    label: 'Lista dos Personagens',
+                meta: {
+                    name: 'Lista dos Personagens',
                     breadcrumb: ' Personagens / Lista'            
                 }
             },
@@ -36,7 +36,7 @@ export default [
                 path: '/personagens/criar',
                 name: 'CriarPersonagens',
                 component: () => import(/* webpackChunkName: "create" */ '../views/admin/herois/create.vue'),
-                metas: {
+                meta: {
                     name: 'Criar Personagem',
                     breadcrumb: 'Personagem / Criar'
                 }
@@ -45,7 +45,7 @@ export default [
                 path: '/personagens/editar/:id',
                 name: 'EditarPersonagem',
                 component: () => import(/* webpackChunkName: "editar" */ '../views/admin/herois/create.vue'),
-                metas: {
+                meta: {
                     name: 'Editar Personagem',
                     breadcrumb: 'Personagem / Editar'
                 }

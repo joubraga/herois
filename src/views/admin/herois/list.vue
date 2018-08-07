@@ -7,7 +7,6 @@
                 <v-data-table 
                     :headers="headers" 
                     :items="items" 
-                    :loading="isLoading" 
                     class="list__table" 
                     :search="search">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
@@ -27,7 +26,7 @@
                                 <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})">
                                     <v-icon class="mr-2"> edit </v-icon>
                                 </router-link>
-                            <v-spacer></v-spacer>
+                                <v-spacer></v-spacer>
                             </v-card-actions>
                         </td>
                     </template>
@@ -66,18 +65,10 @@
             </v-card>
         </v-dialog>
 
-        <v-snackbar v-model="snackbar" :color="color" :multi-line="mode === 'multi-line'" :timeout="timeout" :vertical="mode === 'vertical'" >
-            {{ text }}
-            <v-btn dark flat @click="snackbar = false" >
-                Close
-            </v-btn>
-        </v-snackbar>
-
     </v-container>
 </template>
 
 <script>
-    import axios from 'axios'
     import ActionList from '../../../components/actions/TableActions'
     import Search from '../../../components/filter/Search'
     import { ENDPOINT } from '../../../api/config'    
@@ -93,7 +84,6 @@
                 search: '',
                 dialog: false,
                 items: [],
-                isLoading: false,
                 idItemExclude: '',
                 headers: [
                     { sortable: false },
@@ -106,12 +96,7 @@
                     { text: 'Vel. de Ataque', value: 'attack_speed' },
                     { text: 'Vel.de Movimento', value: 'movement_speed' },
                     { sortable: false}
-                ],
-                snackbar: false,
-                color: 'success',
-                mode: '',
-                timeout: 4000,
-                text: 'Herói excluido com sucesso'
+                ]
             }
         },
         created () {
@@ -121,14 +106,11 @@
             startSearch (filter) {
                 try {
                     if (filter.length > 0) {
-                        this.isLoading = !this.isLoading
                         this.search = filter                 
                     } else {
                         this.search = ''
-                        this.isLoading = !this.isLoading
                     }
                 } catch (error) {
-                    this.isLoading = false
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
                 }
             },
@@ -143,12 +125,13 @@
             exclude () {
                 try {
                     if (this.idItemExclude > 0) {
-                        axios.delete(`${ENDPOINT}heroes/${this.idItemExclude}`).then((response) => {
+                        this.$http.delete(`${ENDPOINT}heroes/${this.idItemExclude}`).then((response) => {
                             if (response.status === 200) {
-                                this.snackbar = true
                                 this.dialog = false
-                                this.idItemExclude = ''
-                                this.setList()
+                                this.$swal('Herói excluído com sucesso', '', 'success').then(() => {
+                                    this.idItemExclude = ''
+                                    this.setList()
+                                })
                             }
                         })
                     }
@@ -162,7 +145,7 @@
                 this.idItemExclude = false
             },
             setList () {
-                axios.get(`${ENDPOINT}heroes`).then(res => {
+                this.$http.get(`${ENDPOINT}heroes`).then(res => {
                     if (res.status === 200) {
                         this.items = res.data.map((hero, index) => {
                             return {

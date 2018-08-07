@@ -9,8 +9,15 @@
         <v-spacer></v-spacer>
 
         <v-toolbar class="toolbar__page" flat style="">
-            <v-toolbar-title> a </v-toolbar-title>
+            <v-toolbar-title class="toolbar__route"> {{ nomeRoute }} </v-toolbar-title>
+            <v-toolbar-title class="toolbar__menu">
+                <ul class="toolbar__menu">
+                    <li class="toolbar__li"> <router-link :to="{name: 'ListaPersonagens'}" tag="a" class="toolbar__link"> Heróis </router-link> </li>
+                    <li class="toolbar__li"> <router-link :to="{name: 'CriarPersonagens'}" tag="a" class="toolbar__link"> Criar </router-link> </li>
+                </ul>
+            </v-toolbar-title>
         </v-toolbar>
+        
     </header>
 </template>
 
@@ -25,26 +32,19 @@
                 default: ''
             }
         },
-        created () {
-            // this.setRoute(this.$route.matched)
+        computed: {
+            nomeRoute () {
+                return this.$store.modules.routeStore.state.name
+            },
+            breadcrumb () {
+                return this.$store.modules.routeStore.state.breadcrumb
+            }
         },
         data () {
             return {
                 title: 'Teste',
                 image: 'LOGO 200 x 45'
             }
-        },
-        methods: {
-            // setRoute (routes) {
-                // console.log('Router Path --> ', this.$route.path)
-                // console.log('Router ==> ', routes)
-                // return routes.forEach((value) => {
-                //     console.log('Value ==> ', value)
-                //     if (value.path === this.$route.path) {
-                //         return value.name
-                //     }
-                // })
-            // }
         },
         components: {
             UserAvatar
