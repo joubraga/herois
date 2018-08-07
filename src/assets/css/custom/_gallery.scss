@@ -26,11 +26,16 @@
         margin: 1% 1% 1% 0;
         height: 150px;
         background-color: #f5f7fa;
+        @extend %flex-center
     }
 }
 
 .dropzone .dz-message {
     margin: 6em!important;
+}
+
+.vue-dropzone {
+    border: 5px dotted #e5e5e5!important;
 }
 
 @media screen and (max-width: 767px) {

@@ -5,8 +5,7 @@
     border-radius: 5px;
     color: #656d78;
     &-div-custom {
-        display: flex;
-        justify-content: flex-start;
+        @extend %flex-start;        
         align-items: flex-start;
         flex-direction: column;
     }

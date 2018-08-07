@@ -1,11 +1,11 @@
 <template>
     <div class="avatar">
         <v-avatar v-if="image !== ''" :tile="tile" :size="avatarSize" color="grey lighten-4" >
-            <img :src="image" alt="avatar" :width="avatarSize" :height="avatarSize">
+           <img :src="image" alt="avatar" :width="avatarSize" :height="avatarSize">
         </v-avatar>
 
          <v-avatar v-else>
-            <v-icon >perm_identity</v-icon>
+            <span class="avatar__span"> Larry</span><v-icon >perm_identity</v-icon>
         </v-avatar>
         
         <v-menu bottom left>

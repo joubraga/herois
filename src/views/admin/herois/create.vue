@@ -140,7 +140,7 @@
             </v-card>
         </CardForm>
 
-        <Gallery />
+        <Gallery :photosUrl="photosUrl"/>
 
         <v-container>
             <v-flex right>
@@ -155,8 +155,6 @@
     import { ENDPOINT } from '../../../api/config'
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
-    import Request from '../../../request'
-    import GalleryPhotosVue from '../../../components/gallery/GalleryPhotos.vue';
 
     export default {
         name: 'CadastroPersonagem',
@@ -164,16 +162,27 @@
             CardForm,
             Gallery
         },
+        created () {
+            
+            if (this.$route.params.id) {
+                this.$http.get(`${ENDPOINT}heroes/${this.$route.params.id}`).then(res => {
+                    this.arraPhotos = this.getPhotosById(res.body.photos)
+                    this.form = res.data
+                    this.form.id = this.$route.params.id
+                    this.edit = true
+                })
+            }
+        },
         mounted () {
             try {
-                Request.get(`${ENDPOINT}specialties`).then(especialidades => {
-                    if (especialidades.length > 0) {
-                        this.listaEspecialidades = especialidades.map(espec => espec)
+                this.$http.get(`${ENDPOINT}specialties`).then(especialidades => {
+                    if (especialidades.body.length > 0) {
+                        this.listaEspecialidades = especialidades.body.map(espec => espec)
                     }
                 })
-                Request.get(`${ENDPOINT}classes`).then(classes => {
-                    if (classes.length > 0) {
-                        this.listaClasse = classes.map(classe => classe)
+                this.$http.get(`${ENDPOINT}classes`).then(classes => {
+                    if (classes.body.length > 0) {
+                        this.listaClasse = classes.body
                     }
                 })
             } catch (error) {
@@ -184,6 +193,7 @@
             return {
                 valid: true,
                 items: [],
+                edit: false,
                 form: {
                     name: '',
                     specialties: null,
@@ -193,8 +203,9 @@
                     damage: 0,
                     attack_speed: 0,
                     movement_speed: 0,
-                    photos: null
+                    photos: [76, 77, 78, 79, 80]
                 },
+                photosUrl: [],
                 listaEspecialidades: [],
                 errorEspecialidades: false,
                 errorClasse: false,
@@ -209,12 +220,23 @@
                 if (this.$refs.form.validate()) {
                     try {
                         this.setEspecelidades()
-                        this.setClasses()      
-                        Request.post(`${ENDPOINT}heroes`, this.form).then(response => {
-                            if (response.status === 201) {
-                                alert('Personagem cadastrado com sucesso')
-                            }
-                        })
+                        this.setClasses()
+                        if (this.edit) {
+                            console.log('For ==> ', this.form)
+                            this.$http.put(`${ENDPOINT}heroes`, this.form).then(response => {
+                                if (response.status === 200) {
+                                    this.alertSuccess()
+                                    this.$router.push({name: 'ListaPersonagens'})
+                                }
+                            })
+                        } else {
+                            this.$http.post(`${ENDPOINT}heroes`, this.form).then(response => {
+                                if (response.status === 200) {
+                                    this.alertSuccess()
+                                    this.$router.push({name: 'ListaPersonagens'})
+                                }
+                            })
+                        }
                     } catch (error) {
                         console.log('Erro Post Herois -> ', error)
                     }
@@ -226,7 +248,23 @@
                 this.form.specialties = this.form.specialties.map(spec => spec.id)
             },
             setClasses () {
-                this.form.class_id = this.form.class_id.map(classe => classe.id)
+                this.form.class_id = this.form.class_id.id
+            },
+            getPhotosById (photos) {
+                try {
+                    photos.forEach((id) => {
+                        this.$http.get(`${ENDPOINT}photos/${id}`).then((res) => {
+                            this.photosUrl.push(res.url)
+                        })
+                    })
+                } catch (error) {
+                    console.log('Erro ao tentar coletar imagem ', error)                    
+                }
+            },
+            alertSuccess () {
+                this.$swal('Salvo com sucesso', '', 'success').then(() => {
+                    this.$route.push({name: 'ListaPersonagens'})
+                })
             }
         }
     }
