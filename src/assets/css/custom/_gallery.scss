@@ -1,3 +1,5 @@
+$gallery_backgrond: #e6e9ed;
+
 .gallery {
    
     &__div {
@@ -10,23 +12,37 @@
         color: #4687df;
         margin-bottom: 1%;
     }
-    &__div-drag {
-        border: 4px dotted #e6e9ed;
-        color: #e6e9ed;
-        height: 280px;
-        width: 100%;
-        border-radius: 10px;
-        & span {
-            font-size: 32px;
-            color: #e6e9ed;
-            font-weight: 600;
-        }
-    }
     &__preview {
         margin: 1% 1% 1% 0;
         height: 150px;
-        background-color: #f5f7fa;
+        background-color: $gallery_backgrond;
         @extend %flex-center
+    }
+    &__dropbox {
+        border: 5px dotted #e6e9ed;
+        outline-offset: -10px;
+        color: #e6e9ed;
+        padding: 10px 10px;
+        min-height: 200px;
+        position: relative;
+        cursor: pointer;
+        @extend %flex-center
+    }
+    &__dropbox-input-file {
+        opacity: 0;
+        width: 100%;
+        height: 200px;
+        position: absolute;
+        cursor: pointer;
+    }
+    &__dropbox:hover {
+        background: lightblue;
+    }
+    &__dropbox-text {
+        font-size: 32px;
+        color: #e6e9ed;
+        font-weight: 600;
+        text-align: center;
     }
 }
 

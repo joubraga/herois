@@ -3,7 +3,7 @@
         <CardForm>
             <v-card flat slot="form">
                 <v-container fluid grid-list-xl>
-                    <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
                         <v-layout wrap align-center>
                             <v-flex xs12 sm4 d-flex>
                                 <div class="form__input-div-custom">
@@ -140,7 +140,7 @@
             </v-card>
         </CardForm>
 
-        <Gallery :photosUrl="photosUrl"/>
+        <Gallery :photosUrl="photosUrl" @upload="setImage"/>
 
         <v-container>
             <v-flex right>
@@ -163,7 +163,6 @@
             Gallery
         },
         created () {
-            
             if (this.$route.params.id) {
                 this.$http.get(`${ENDPOINT}heroes/${this.$route.params.id}`).then(res => {
                     this.arraPhotos = this.getPhotosById(res.body.photos)
@@ -171,6 +170,8 @@
                     this.form.id = this.$route.params.id
                     this.edit = true
                 })
+            } else {
+                this.resetForm()
             }
         },
         mounted () {
@@ -203,7 +204,7 @@
                     damage: 0,
                     attack_speed: 0,
                     movement_speed: 0,
-                    photos: [76, 77, 78, 79, 80]
+                    photos: []
                 },
                 photosUrl: [],
                 listaEspecialidades: [],
@@ -216,14 +217,13 @@
             }
         },
         methods: {
-            async saveHero () {
+            saveHero () {
                 if (this.$refs.form.validate()) {
                     try {
                         this.setEspecelidades()
                         this.setClasses()
                         if (this.edit) {
-                            console.log('For ==> ', this.form)
-                            this.$http.put(`${ENDPOINT}heroes`, this.form).then(response => {
+                            this.$http.put(`${ENDPOINT}heroes/${this.form.id}`, this.form).then(response => {
                                 if (response.status === 200) {
                                     this.alertSuccess()
                                     this.$router.push({name: 'ListaPersonagens'})
@@ -238,17 +238,21 @@
                             })
                         }
                     } catch (error) {
-                        console.log('Erro Post Herois -> ', error)
+                        this.alertError(`Erro ao tentar salvar herói <br> '${error}`)
                     }
                 } else {
-                    console.log('Erro ao salvar o Herói')
+                    this.alertError('Erro ao tentar salvar herói')
                 }
             },
             setEspecelidades () {
-                this.form.specialties = this.form.specialties.map(spec => spec.id)
+                if (typeof(this.form.specialties) === 'object') {
+                    this.form.specialties = this.form.specialties.map(spec => spec.id)
+                }
             },
             setClasses () {
-                this.form.class_id = this.form.class_id.id
+                if (typeof(this.form.class_id) === 'object') {
+                    this.form.class_id = this.form.class_id.id
+                }
             },
             getPhotosById (photos) {
                 try {
@@ -258,13 +262,39 @@
                         })
                     })
                 } catch (error) {
-                    console.log('Erro ao tentar coletar imagem ', error)                    
+                    this.alertError(`Erro ao tentar coletar imagem <br> '${error}`)
                 }
             },
             alertSuccess () {
-                this.$swal('Salvo com sucesso', '', 'success').then(() => {
-                    this.$route.push({name: 'ListaPersonagens'})
-                })
+                this.$swal('Salvo com sucesso', '', 'success')
+            },
+            alertError (msg) {
+                this.$swal('Erro', msg, 'error')
+            },
+            setImage (imgs) {
+                try {
+                     if (imgs.length > 0) {
+                        imgs.forEach((value) => {
+                            this.form.photos.push(value.imageId)
+                        })
+                    } else {
+                        this.form.photos.push(imgs[0].imageId)
+                    }
+                    this.getPhotosById(this.form.photos)
+                } catch (error) {
+                    this.alertError(`Erro ao tentar salvar photos <br> '${error}`)
+                }
+            },
+            resetForm () {
+                this.form.name = ''
+                this.form.specialties = null
+                this.form.class_id = null
+                this.form.health_points = 0
+                this.form.defense = 0
+                this.form.damage = 0
+                this.form.attack_speed = 0
+                this.form.movement_speed = 0
+                this.form.photos = []
             }
         }
     }

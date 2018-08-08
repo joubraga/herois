@@ -9,13 +9,26 @@
                     
                     <v-spacer></v-spacer>
 
-                    <vue-dropzone 
-                        class="gallery__div-drag" 
-                        ref="myVueDropzone" 
-                        id="dropzone"
-                        :options="options"
-                        @vdropzone-files-added="uploaded"
-                    />
+                    <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+                        <div class="gallery__dropbox">
+                            <input 
+                                type="file" 
+                                multiple 
+                                :name="uploadFieldName" 
+                                :disabled="isSaving" 
+                                @change="filesChange($event.target.name, $event.target.files) 
+                                fileCount = $event.target.files.length"
+                                accept="image/*" 
+                                class="gallery__dropbox-input-file"
+                            >
+                                <p class="gallery__dropbox-text" v-if="isInitial">
+                                    Drag and drop your file(s) here
+                                </p>
+                                <p class="gallery__dropbox-text" v-if="isSaving">
+                                    Uploading {{ fileCount }} files...
+                                </p>
+                        </div>
+                    </form>
                 </v-flex>
             </v-card>
         </v-container>    
@@ -23,49 +36,74 @@
 
 <script>
     import GalleryPhotos from './GalleryPhotos'
-    import vue2Dropzone from 'vue2-dropzone'
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
     import { ENDPOINT } from '../../api/config'
+    const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
 
     export default {
         name: 'Gallery',
         props: {
             photosUrl: {
-                default: []
+                type: Array
             }
         },
         components: {
             GalleryPhotos,
-             vueDropzone: vue2Dropzone
+        },
+        mounted () {
+            this.reset();
         },
         data () {
             return {
                 qtdPhotos: 8,
-                options: {
-                    url: `${ENDPOINT}photos`,
-                    autoProcessQueue: false,
-                    enqueueFile: true,
-                    chunking: true,
-                    forceChunking: true
-                }
+                uploadedFiles: [],
+                uploadError: null,
+                currentStatus: null,
+                uploadFieldName: 'photos',
+            }
+        },
+        computed: {
+            isInitial () {
+                return this.currentStatus === STATUS_INITIAL
+            },
+            isSaving () {
+                return this.currentStatus === STATUS_SAVING
+            },
+            isSuccess () {
+                return this.currentStatus === STATUS_SUCCESS
+            },
+            isFailed () {
+                return this.currentStatus === STATUS_FAILED
             }
         },
         methods: {
-            uploaded: (file) => {
-                console.log('Arquivo =: ', file)
-                // const instance = axios.create({
-                //     baseURL: `${ENDPOINT}`
-                // })
+            reset () {
+                this.currentStatus = STATUS_INITIAL
+                this.uploadedFiles = []
+                this.uploadError = null
+            },
+            save (formData) {
+                this.currentStatus = STATUS_SAVING
+                this.upload(formData).then(() => {
+                    this.currentStatus = STATUS_INITIAL
+                }).catch(err => {
+                    this.uploadError = err.response
+                    this.currentStatus = STATUS_FAILED
+                });
+            },
+            filesChange (fieldName, fileList) {
+                const formData = new FormData()
 
-                // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
-                // axios.defaults.headers.post['Access-Control-Request-Headers'] = 'authorization,cache-control,x-requested-with'
+                if (!fileList.length) return;
 
-                // const fd = new FormData()
-                // fd.append('file', file[0], file[0].name)
-
-                // instance.post('photos', fd).then(res => {
-                //     console.log('Sera que foi essa merda => ', res)
-                // })
+                Array.from(Array(fileList.length).keys()).map(x => {
+                    formData.append('file', fileList[x], fileList[x].name)
+                })
+                this.save(formData);
+            },
+            upload(formData) {
+                return this.$http.post(`${ENDPOINT}photos`, formData).then(image => {
+                    this.$emit('upload', image.body)
+                })
             }
         }
     }
