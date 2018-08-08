@@ -1,6 +1,7 @@
 <template>
     <v-layout class="search">
         <v-flex xs10 md11 lg11 class="search__div">
+            <v-icon class="search__icon">search</v-icon>
             <input type="search" name="search" class="search__input" v-model="filter" @keyup="enviaSearch(filter)" :placeholder="placeholderSearch">
         </v-flex>
         <v-flex xs2 md1 lg1 v-if="newButton">

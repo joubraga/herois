@@ -3,7 +3,7 @@
         background-color: #4687df!important;
         color: #ffffff;
         font-weight: 600;
-        border-radius: 5px;
+        @extend %borda-radius-padrao;
     }
     &-icon {
         margin-right: 5%;

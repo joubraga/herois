@@ -1,9 +1,9 @@
 .form__input {
     border: 1px solid #e6e9ed;
     width: auto;
-    padding: 2.5%;
-    border-radius: 5px;
+    padding: 2.5%;    
     color: #656d78;
+    @extend %borda-radius-padrao;
     &-div-custom {
         @extend %flex-start;        
         align-items: flex-start;

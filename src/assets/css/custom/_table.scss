@@ -7,11 +7,29 @@
     }
     & thead tr {
         border-bottom: none!important;
+        color: #abb3be!important;
+        font-weight: 500!important;
+        font-size: 13px!important;
     }
     & tbody tr {
         background-color: #ffffff;
         height: 90px;
-        margin-bottom: 1.5%;
+        // margin-bottom: 1.5%;
+        @extend %borda-radius-padrao
+    }
+    & tbody tr::before {
+        height: 20px;
+        margin-bottom: 2%;
+    }
+    & tbody tr td{
+        font-size: 13px;
+        font-weight: 500;
+        color: #878d96;
+    }
+    &-name{
+        font-size: 18px!important;
+        font-weight: 600!important;
+        color: #656d78;
     }
 }
 
