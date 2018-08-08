@@ -22,7 +22,7 @@
                         <td class="text-xs-left"> {{ props.item.movement_speed }} </td>
                         <td> 
                             <v-card-actions class="table__actions">
-                                <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)" title="Apagar"> delete </v-icon>
+                                <v-icon class="table__actions-item" @click="exclude(props.item.id, props.item.name)" title="Apagar"> delete </v-icon>
                                 <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})" title="Editar">
                                     <v-icon class="mr-2"> edit </v-icon>
                                 </router-link>
@@ -40,36 +40,10 @@
             </v-flex>
         </v-layout>
 
-        <v-dialog v-model="dialog" width="500" >
-            <v-card>
-                <v-card-title class="headline lighten-2 error"  primary-title >
-                    Excluir
-                </v-card-title>
-
-                <v-card-text>
-                    Você realmente deseja excluir este herói?
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="closeDialog" >
-                        Cancelar
-                    </v-btn>
-
-                    <v-btn color="primary" flat @click="exclude" >
-                        Excluir
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
     </v-container>
 </template>
 
 <script>
-    import ActionList from '../../../components/actions/TableActions'
     import Search from '../../../components/filter/Search'
     import { ENDPOINT } from '../../../api/config'    
 
@@ -77,14 +51,11 @@
         name: 'ListaHerois',
         components: {
             Search,
-            ActionList
         },
         data () {
             return {
                 search: '',
-                dialog: false,
                 items: [],
-                idItemExclude: '',
                 headers: [
                     { sortable: false },
                     { text: 'Nome', value: 'name' },
@@ -114,31 +85,32 @@
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
                 }
             },
-            setexcludeId (id) {
-                this.idItemExclude = id
-                this.dialog = true
-            },
-            exclude () {
+            exclude (id, hero) {
                 try {
-                    if (this.idItemExclude > 0) {
-                        this.$http.delete(`${ENDPOINT}heroes/${this.idItemExclude}`).then((response) => {
-                            if (response.status === 200) {
-                                this.dialog = false
-                                this.$swal('Herói excluído com sucesso', '', 'success').then(() => {
-                                    this.idItemExclude = ''
-                                    this.setList()
+                    this.$swal({
+                        title: `Você realmente deseja excluir o herói ${hero}`,
+                        text: "",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Apagar'
+                        }).then((result) => {
+                            if (result.value) {
+                                this.$http.delete(`${ENDPOINT}heroes/${id.toString()}`).then((response) => {
+                                    if (response.status === 200) {
+                                        this.dialog = false
+                                        this.$swal(`Herói ${hero} foi excluido com sucesso`, '', 'success').then(() => {
+                                            this.setList()
+                                        })
+                                    }
                                 })
                             }
-                        })
-                    }
+                        }
+                    )
                 } catch (error) {
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
-                    this.idItemExclude = ''
                 }
-            },
-            closeDialog () {
-                this.dialog = false
-                this.idItemExclude = false
             },
             setList () {
                 this.$http.get(`${ENDPOINT}heroes`).then(res => {

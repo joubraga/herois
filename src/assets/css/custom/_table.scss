@@ -34,6 +34,9 @@
 }
 
 .table__actions {
+    & i {
+        margin-right: 20%;
+    }
     &-item {
         margin-right: 10%;
         margin-left: 10%;

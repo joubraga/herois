@@ -10,9 +10,11 @@
 
         <v-layout wrap align-start>
             <v-toolbar class="toolbar__page" flat style="">
+
                 <v-flex xs12 sm5 lg2 d-flex>
                     <v-toolbar-title class="toolbar__route"> {{ nomeRoute }} </v-toolbar-title>
                 </v-flex>
+
                 <v-flex xs12 sm7 lg10 d-flex>
                     <v-toolbar-title class="toolbar__menu">
                         <v-layout align-start>
@@ -25,9 +27,9 @@
                         </v-layout>
                     </v-toolbar-title>
                 </v-flex>
+
             </v-toolbar>
         </v-layout>
-        
     </header>
 </template>
 
@@ -44,16 +46,15 @@
         },
         computed: {
             nomeRoute () {
-                return this.$store.modules.routeStore.state.name
-            },
-            breadcrumb () {
-                return this.$store.modules.routeStore.state.breadcrumb
+                if (this.$breadcrumbs[0]) {
+                    return this.$breadcrumbs[0].meta.name
+                }
             }
         },
         data () {
             return {
                 title: 'Teste',
-                image: 'LOGO 200 x 45'
+                image: 'LOGO 200 x 45',
             }
         },
         components: {

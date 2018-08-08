@@ -10,7 +10,15 @@ const getters = {
     }
 }
 
+const mutations = {
+    'updateRoute': (route) => {
+        state.name = route.name
+        state.breadcrumb = route.breadcrumb
+    }
+}
+
 export default {
     state,
-    getters
+    getters,
+    mutations
 }
