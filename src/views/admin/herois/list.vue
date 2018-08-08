@@ -22,8 +22,8 @@
                         <td class="text-xs-left"> {{ props.item.movement_speed }} </td>
                         <td> 
                             <v-card-actions class="table__actions">
-                                <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)"> delete </v-icon>
-                                <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})">
+                                <v-icon class="table__actions-item" @click="setexcludeId(props.item.id)" title="Apagar"> delete </v-icon>
+                                <router-link class="table__actions-item" tag="a" :to="({name: 'EditarPersonagem', params: {id: props.item.id}})" title="Editar">
                                     <v-icon class="mr-2"> edit </v-icon>
                                 </router-link>
                                 <v-spacer></v-spacer>
@@ -113,10 +113,6 @@
                 } catch (error) {
                     console.log(`Erro ao tentar comunicar com a API => ${error}`)
                 }
-            },
-            deleteItem (item) {
-                const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
             },
             setexcludeId (id) {
                 this.idItemExclude = id

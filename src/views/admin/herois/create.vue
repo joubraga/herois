@@ -241,7 +241,7 @@
                         this.alertError(`Erro ao tentar salvar herói <br> '${error}`)
                     }
                 } else {
-                    this.alertError(`Erro ao tentar salvar herói <br> '${error}`)
+                    this.alertError('Erro ao tentar salvar herói')
                 }
             },
             setEspecelidades () {
