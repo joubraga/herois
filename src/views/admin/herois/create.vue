@@ -152,6 +152,7 @@
 </template>
 
 <script>
+    import _ from 'lodash'
     import { ENDPOINT } from '../../../api/config'
     import CardForm from '../../../components/cards/CardForm'
     import Gallery from '../../../components/gallery/Gallery'
@@ -179,15 +180,17 @@
                 this.$http.get(`${ENDPOINT}specialties`).then(especialidades => {
                     if (especialidades.body.length > 0) {
                         this.listaEspecialidades = especialidades.body.map(espec => espec)
+                        this.listaEspecialidades = _.orderBy(this.listaEspecialidades, 'name', 'asc')
                     }
                 })
                 this.$http.get(`${ENDPOINT}classes`).then(classes => {
                     if (classes.body.length > 0) {
                         this.listaClasse = classes.body
+                        this.listaClasse = _.orderBy(this.listaClasse, 'name', 'asc')
                     }
                 })
             } catch (error) {
-                console.log('Erro ao carregar especialidades / classes ', error)
+                this.alertError(`Erro ao carregar especialidades / classes <br> '${error}`)
             }
         },
         data () {

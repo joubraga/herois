@@ -1,37 +1,33 @@
 <template>
     <v-container class="gallery">
-            <v-card flat class="gallery__card">
-                <v-flex xs12 md12 lg12 class="gallery__div">
-                    
-                    <h2 class="gallery__title"> Galeria do personagem </h2>
+        <v-card flat class="gallery__card">
+            <v-flex xs12 md12 lg12 class="gallery__div">
+                
+                <h2 class="gallery__title"> Galeria do personagem </h2>
 
-                    <GalleryPhotos :qtdPhotos="qtdPhotos" :photosUrl="photosUrl" />
-                    
-                    <v-spacer></v-spacer>
+                <GalleryPhotos :qtdPhotos="qtdPhotos" :photosUrl="photosUrl" />
+                
+                <v-spacer></v-spacer>
 
-                    <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-                        <div class="gallery__dropbox">
-                            <input 
-                                type="file" 
-                                multiple 
-                                :name="uploadFieldName" 
-                                :disabled="isSaving" 
-                                @change="filesChange($event.target.name, $event.target.files) 
-                                fileCount = $event.target.files.length"
-                                accept="image/*" 
-                                class="gallery__dropbox-input-file"
-                            >
-                                <p class="gallery__dropbox-text" v-if="isInitial">
-                                    Drag and drop here
-                                </p>
-                                <p class="gallery__dropbox-text" v-if="isSaving">
-                                    Uploading {{ fileCount }} files...
-                                </p>
-                        </div>
-                    </form>
-                </v-flex>
-            </v-card>
-        </v-container>    
+                <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+                    <div class="gallery__dropbox">
+                        <input
+                            type="file"
+                            multiple
+                            :name="uploadFieldName"
+                            :disabled="isSaving"
+                            @change="filesChange($event.target.name, $event.target.files)
+                            fileCount = $event.target.files.length"
+                            accept="image/*"
+                            class="gallery__dropbox-input-file"
+                        >
+                            <p class="gallery__dropbox-text" v-if="isInitial"> Drag and drop here </p>
+                            <p class="gallery__dropbox-text" v-if="isSaving"> Uploading {{ fileCount }} files... </p>
+                    </div>
+                </form>
+            </v-flex>
+        </v-card>
+    </v-container>    
 </template>
 
 <script>
