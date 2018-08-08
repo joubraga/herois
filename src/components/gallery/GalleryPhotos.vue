@@ -26,11 +26,6 @@
             photosUrl: {
                 type: Array
             }
-        },
-        computed: {
-            photosList () {
-                return ''
-            }
         }
     }
 </script>

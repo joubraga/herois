@@ -8,7 +8,8 @@
                     :headers="headers" 
                     :items="items" 
                     class="list__table" 
-                    :search="search">
+                    :search="search"
+                    rows-per-page-text="Linhas por página">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                     <template slot="items" slot-scope="props" style="margin-top: 1%!important; margin-bottom: 1%!important;">
                         <td>  <img :src="props.item.photo" alt=""></td>
