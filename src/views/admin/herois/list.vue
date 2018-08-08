@@ -10,9 +10,9 @@
                     class="list__table" 
                     :search="search">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                    <template slot="items" slot-scope="props">
+                    <template slot="items" slot-scope="props" style="margin-top: 1%!important; margin-bottom: 1%!important;">
                         <td>  <img :src="props.item.photo" alt=""></td>
-                        <td class="text-xs-left"> {{ props.item.name }} </td>
+                        <td class="text-xs-left list__table-name"> {{ props.item.name }} </td>
                         <td class="text-xs-left"> {{ props.item.class_name }} </td>
                         <td class="text-xs-left"> {{ props.item.specialties }} </td>
                         <td class="text-xs-left"> {{ props.item.health_points }} </td>

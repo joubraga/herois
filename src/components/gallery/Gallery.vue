@@ -22,7 +22,7 @@
                                 class="gallery__dropbox-input-file"
                             >
                                 <p class="gallery__dropbox-text" v-if="isInitial">
-                                    Drag and drop your file(s) here
+                                    Drag and drop here
                                 </p>
                                 <p class="gallery__dropbox-text" v-if="isSaving">
                                     Uploading {{ fileCount }} files...

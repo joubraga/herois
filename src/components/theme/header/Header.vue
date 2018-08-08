@@ -8,15 +8,25 @@
 
         <v-spacer></v-spacer>
 
-        <v-toolbar class="toolbar__page" flat style="">
-            <v-toolbar-title class="toolbar__route"> {{ nomeRoute }} </v-toolbar-title>
-            <v-toolbar-title class="toolbar__menu">
-                <ul class="toolbar__menu">
-                    <li class="toolbar__li"> <router-link :to="{name: 'ListaPersonagens'}" tag="a" class="toolbar__link"> Heróis </router-link> </li>
-                    <li class="toolbar__li"> <router-link :to="{name: 'CriarPersonagens'}" tag="a" class="toolbar__link"> Criar </router-link> </li>
-                </ul>
-            </v-toolbar-title>
-        </v-toolbar>
+        <v-layout wrap align-start>
+            <v-toolbar class="toolbar__page" flat style="">
+                <v-flex xs12 sm5 lg2 d-flex>
+                    <v-toolbar-title class="toolbar__route"> {{ nomeRoute }} </v-toolbar-title>
+                </v-flex>
+                <v-flex xs12 sm7 lg10 d-flex>
+                    <v-toolbar-title class="toolbar__menu">
+                        <v-layout align-start>
+                            <v-flex xs12 sm3 lg2 d-flex>
+                                <v-toolbar-title class="toolbar__route"> <router-link :to="{name: 'ListaPersonagens'}" tag="a" class="toolbar__link"> Heróis </router-link> </v-toolbar-title>
+                            </v-flex>
+                            <v-flex xs12 sm3 lg2 d-flex>
+                                <v-toolbar-title class="toolbar__route"> <router-link :to="{name: 'CriarPersonagens'}" tag="a" class="toolbar__link"> Criar </router-link> </v-toolbar-title>
+                            </v-flex>
+                        </v-layout>
+                    </v-toolbar-title>
+                </v-flex>
+            </v-toolbar>
+        </v-layout>
         
     </header>
 </template>

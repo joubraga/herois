@@ -5,7 +5,7 @@
         </v-avatar>
 
          <v-avatar v-else>
-            <span class="avatar__span"> Larry</span><v-icon >perm_identity</v-icon>
+            <span class="avatar__span"> Lary</span><v-icon >perm_identity</v-icon>
         </v-avatar>
         
         <v-menu bottom left>
