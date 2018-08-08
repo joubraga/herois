@@ -40,25 +40,25 @@
             </v-flex>
         </v-layout>
 
-        <v-dialog v-model="dialog" width="500" >
+        <v-dialog v-model="dialog" width="500" class="modal">
             <v-card>
-                <v-card-title class="headline lighten-2 error"  primary-title >
+                <v-card-title class="headline lighten-2 error modal__title"  primary-title >
                     Excluir
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="modal__text">
                     Você realmente deseja excluir este herói?
                 </v-card-text>
 
                 <v-divider></v-divider>
 
-                <v-card-actions>
+                <v-card-actions class="modal__actions">
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="closeDialog" >
+                    <v-btn color="primary" flat @click="closeDialog" class="modal__buttons">
                         Cancelar
                     </v-btn>
 
-                    <v-btn color="primary" flat @click="exclude" >
+                    <v-btn color="error" flat @click="exclude" class="modal__buttons">
                         Excluir
                     </v-btn>
                 </v-card-actions>
@@ -69,7 +69,6 @@
 </template>
 
 <script>
-    import ActionList from '../../../components/actions/TableActions'
     import Search from '../../../components/filter/Search'
     import { ENDPOINT } from '../../../api/config'    
 
@@ -77,7 +76,6 @@
         name: 'ListaHerois',
         components: {
             Search,
-            ActionList
         },
         data () {
             return {
