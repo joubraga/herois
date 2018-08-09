@@ -22,7 +22,7 @@
             },
             placeholderSearch: {
                 type: String,
-                default: 'Busca por nome, classe, especialidades, outros ...'
+                default: 'Buscar por nome, classe, especialidades, outros ...'
             },
             newButton: {
                 type: Boolean,
